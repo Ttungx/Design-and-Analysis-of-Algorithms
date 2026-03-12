@@ -1,0 +1,25 @@
+name: ❓ 其他问题/讨论
+description: 有其他问题或想发起讨论
+title: "【问题】简短描述你的问题"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        有问题想问？或想和同学们讨论？请详细描述！
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 问题描述
+      description: 请详细描述你的问题或想讨论的内容
+      placeholder: "我想问一下..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 相关背景（可选）
+      description: 补充相关背景信息，方便他人理解
+      placeholder: "这道题的背景是..."

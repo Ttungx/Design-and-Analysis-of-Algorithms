@@ -1,0 +1,48 @@
+name: 💡 课程建议/反馈
+description: 对课程内容、作业安排或仓库维护的建议
+title: "【建议】一句话描述你的建议"
+labels: ["enhancement", "discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你对课程提出宝贵建议！我们会认真考虑每一条反馈。
+
+  - type: checkboxes
+    id: category
+    attributes:
+      label: 建议类别
+      description: 请选择你的建议类别
+      options:
+        - label: 作业难度/布置频率
+        - label: 仓库整理方式（文件夹分类、命名规范等）
+        - label: 学习资料补充（想要更多某章节的参考资料）
+        - label: 课程进度建议
+        - label: 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: 建议详情
+      description: 请详细描述你的想法，以及为什么你觉得这样会更好
+      placeholder: "我建议..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的效果
+      description: 你希望调整后达到什么样的效果？
+      placeholder: "调整后可以更方便复习、作业负担更轻等"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 备注/补充
+      description: 其他想说的话
+      placeholder: "另外..."

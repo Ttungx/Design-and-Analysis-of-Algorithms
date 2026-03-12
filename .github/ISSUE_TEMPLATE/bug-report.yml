@@ -1,0 +1,61 @@
+name: 📝 作业题报错
+description: 如果你发现作业题描述、数据或答案有误，请告诉我们
+title: "【报错】题目编号 - 简短的问题描述"
+labels: ["bug", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你反馈作业题问题！请填写以下信息帮助我们快速定位和修复。
+
+  - type: input
+    id: problem-id
+    attributes:
+      label: 题目编号/名称
+      description: 例如：HW1-Q3 或 冒泡排序实现
+      placeholder: "7-17 顺序查找"
+    validations:
+      required: true
+
+  - type: input
+    id: problem-link
+    attributes:
+      label: 题目链接/路径
+      description: 可选，方便快速定位
+      placeholder: "PTA链接或仓库内路径"
+
+  - type: checkboxes
+    id: problem-type
+    attributes:
+      label: 问题类型
+      description: 请选择发现的问题类型
+      options:
+        - label: 题目描述含糊/有歧义
+        - label: 测试用例/示例输出错误
+        - label: 参考答案有误
+        - label: 数据范围/约束条件不明确
+        - label: 其他问题
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 详细说明
+      description: 请详细描述你认为哪里出错了，如果是代码题，可以贴出导致报错的输入数据
+      placeholder: "我发现这道题的测试用例有问题..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 你的建议（可选）
+      description: 你认为正确的答案或者改进建议是什么？
+      placeholder: "我认为正确的输出应该是..."
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图（可选）
+      description: 如果有截图能更直观说明问题，请在此上传
