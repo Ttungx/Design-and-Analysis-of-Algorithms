@@ -1,0 +1,30 @@
+name: Release Reminder
+
+on:
+  schedule:
+    # 北京时间 20:00 = UTC 12:00
+    - cron: '0 12 * * 6,0'
+  workflow_dispatch:
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send email reminder
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.qq.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: '【提醒】算法设计与分析 - 发布 Releases'
+          body: |
+            您好！
+
+            这是自动提醒：请记得发布本周的课本扫描件到 Releases。
+
+            仓库地址：https://github.com/Ttungx/Design-and-Analysis-of-Algorithms
+
+            祝好！
+          to: ${{ secrets.EMAIL_TO }}
+          from: GitHub Actions
