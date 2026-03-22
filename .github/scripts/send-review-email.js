@@ -206,7 +206,7 @@ async function sendReviewEmail() {
   // 获取环境变量
   const issueTitle = process.env.ISSUE_TITLE;
   const issueUrl = process.env.ISSUE_URL;
-  const emailAddress = process.env.EMAIL_ADDRESS;
+  const emailAddress = process.env.EMAIL_USERNAME;
   const emailPassword = process.env.EMAIL_PASSWORD;
 
   console.log(`[触发原因] Issue标题: "${issueTitle}"`);
