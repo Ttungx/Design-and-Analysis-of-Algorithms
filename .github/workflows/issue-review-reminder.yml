@@ -8,6 +8,8 @@ jobs:
   send-review-email:
     runs-on: ubuntu-latest
     # 只处理带有「题目信息完善」标签的Issue
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     if: github.event.label.name == '题目信息完善'
 
     steps:
