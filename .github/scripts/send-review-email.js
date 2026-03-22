@@ -228,7 +228,7 @@ async function sendReviewEmail() {
 
   // 3. 检查邮件配置
   if (!emailAddress || !emailPassword) {
-    console.log('[工作流终止] EMAIL_ADDRESS 或 EMAIL_PASSWORD 未配置');
+    console.log('[工作流终止] EMAIL_USERNAME 或 EMAIL_PASSWORD 未配置');
     return;
   }
 
