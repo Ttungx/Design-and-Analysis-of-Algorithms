@@ -8,18 +8,16 @@ jobs:
   send-review-email:
     runs-on: ubuntu-latest
     # 只处理带有「题目信息完善」标签的Issue
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     if: github.event.label.name == '题目信息完善'
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install dependencies
         run: npm install

@@ -1,5 +1,19 @@
 const nodemailer = require('nodemailer');
 
+/**
+ * 脱敏邮箱地址，显示前三位和@后的服务器名
+ * @param {string} email - 邮箱地址
+ * @returns {string} - 脱敏后的邮箱，如 "203***@qq.com"
+ */
+function maskEmail(email) {
+  if (!email || typeof email !== 'string') return '***';
+  const atIndex = email.indexOf('@');
+  if (atIndex < 3) return '***';
+  const prefix = email.substring(0, 3);
+  const domain = email.substring(atIndex);
+  return `${prefix}***${domain}`;
+}
+
 // 题号范围与负责人映射
 const CHARGE_MAPPING = [
   { min: 1, max: 24, chargeKey: 'CHARGE1', emailKey: 'EMAIL1' },
@@ -54,7 +68,7 @@ function matchChargePerson(problemNumber) {
         return null;
       }
 
-      console.log(`[匹配负责人] 成功匹配: ${charge} <${email}> (题号范围: ${mapping.min}-${mapping.max})`);
+      console.log(`[匹配负责人] 成功匹配: ${charge} <${maskEmail(email)}> (题号范围: ${mapping.min}-${mapping.max})`);
       return { charge, email };
     }
   }
@@ -253,7 +267,7 @@ async function sendReviewEmail() {
   };
 
   // 6. 发送邮件
-  console.log(`[发送邮件] 收件人: ${chargeInfo.charge} <${chargeInfo.email}>`);
+  console.log(`[发送邮件] 收件人: ${chargeInfo.charge} <${maskEmail(chargeInfo.email)}>`);
   console.log(`[发送邮件] 主题: ${mailOptions.subject}`);
 
   try {
