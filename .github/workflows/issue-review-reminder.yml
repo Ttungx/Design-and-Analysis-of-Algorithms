@@ -2,13 +2,13 @@ name: Issue Review Reminder
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [labeled]
 
 jobs:
   send-review-email:
     runs-on: ubuntu-latest
     # 只处理带有「题目信息完善」标签的Issue
-    if: contains(github.event.issue.labels.*.name, '题目信息完善')
+    if: github.event.label.name == '题目信息完善'
 
     steps:
       - name: Checkout repository
