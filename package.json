@@ -1,0 +1,9 @@
+{
+  "name": "design-and-analysis-of-algorithms",
+  "version": "1.0.0",
+  "description": "算法设计与分析课程仓库",
+  "private": true,
+  "dependencies": {
+    "nodemailer": "^6.9.8"
+  }
+}

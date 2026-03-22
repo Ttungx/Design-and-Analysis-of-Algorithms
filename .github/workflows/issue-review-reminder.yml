@@ -1,0 +1,42 @@
+name: Issue Review Reminder
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  send-review-email:
+    runs-on: ubuntu-latest
+    # 只处理带有「题目信息完善」标签的Issue
+    if: contains(github.event.issue.labels.*.name, '题目信息完善')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send review reminder email
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          CHARGE1: ${{ secrets.CHARGE1 }}
+          EMAIL1: ${{ secrets.EMAIL1 }}
+          CHARGE2: ${{ secrets.CHARGE2 }}
+          EMAIL2: ${{ secrets.EMAIL2 }}
+          CHARGE3: ${{ secrets.CHARGE3 }}
+          EMAIL3: ${{ secrets.EMAIL3 }}
+          CHARGE4: ${{ secrets.CHARGE4 }}
+          EMAIL4: ${{ secrets.EMAIL4 }}
+          CHARGE5: ${{ secrets.CHARGE5 }}
+          EMAIL5: ${{ secrets.EMAIL5 }}
+        run: node .github/scripts/send-review-email.js
