@@ -1,0 +1,42 @@
+name: Issue Updated Reminder
+
+on:
+  issues:
+    types: [edited]
+
+jobs:
+  send-updated-email:
+    runs-on: ubuntu-latest
+    # 只处理带有「题目信息完善」标签且状态为 open 的Issue
+    if: contains(github.event.issue.labels.*.name, '题目信息完善') && github.event.issue.state == 'open'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send updated reminder email
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          CHARGE1: ${{ secrets.CHARGE1 }}
+          EMAIL1: ${{ secrets.EMAIL1 }}
+          CHARGE2: ${{ secrets.CHARGE2 }}
+          EMAIL2: ${{ secrets.EMAIL2 }}
+          CHARGE3: ${{ secrets.CHARGE3 }}
+          EMAIL3: ${{ secrets.EMAIL3 }}
+          CHARGE4: ${{ secrets.CHARGE4 }}
+          EMAIL4: ${{ secrets.EMAIL4 }}
+          CHARGE5: ${{ secrets.CHARGE5 }}
+          EMAIL5: ${{ secrets.EMAIL5 }}
+        run: node .github/scripts/send-updated-email.js
