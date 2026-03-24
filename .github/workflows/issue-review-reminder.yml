@@ -7,34 +7,50 @@ on:
 jobs:
   send-review-email:
     runs-on: ubuntu-latest
-    # 只处理状态为 open 的Issue
+    # 只处理状态为 open 且标题包含有效题号的Issue
     if: github.event.issue.state == 'open'
 
     steps:
-      - name: Add '题目信息完善' label to issue
+      - name: Check issue title and add label
+        id: check-title
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: ['题目信息完善']
-            });
-
+            const title = context.payload.issue.title;
+            const match = title.match(/^(\d+)\s*题/);
+            if (match) {
+              const problemNumber = parseInt(match[1], 10);
+              if (problemNumber >= 1 && problemNumber <= 122) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: ['题目信息完善']
+                });
+                console.log(`检测到有效题号: ${problemNumber}，已添加标签`);
+                core.setOutput('valid', 'true');
+                return;
+              }
+            }
+            console.log('未检测到有效题号，跳过添加标签');
+            core.setOutput('valid', 'false');
 
       - name: Checkout repository
+        if: steps.check-title.outputs.valid == 'true'
         uses: actions/checkout@v5
 
       - name: Setup Node.js
+        if: steps.check-title.outputs.valid == 'true'
         uses: actions/setup-node@v5
         with:
           node-version: '24'
 
       - name: Install dependencies
+        if: steps.check-title.outputs.valid == 'true'
         run: npm install
 
       - name: Send review reminder email
+        if: steps.check-title.outputs.valid == 'true'
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
