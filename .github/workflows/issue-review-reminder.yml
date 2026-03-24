@@ -2,13 +2,13 @@ name: Issue Review Reminder
 
 on:
   issues:
-    types: [labeled]
+    types: [opened]
 
 jobs:
   send-review-email:
     runs-on: ubuntu-latest
-    # 只处理带有「题目信息完善」标签的Issue
-    if: github.event.label.name == '题目信息完善'
+    # 只处理状态为 open 的Issue
+    if: github.event.issue.state == 'open'
 
     steps:
       - name: Checkout repository
