@@ -11,6 +11,18 @@ jobs:
     if: github.event.issue.state == 'open'
 
     steps:
+      - name: Add '题目信息完善' label to issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['题目信息完善']
+            });
+
+
       - name: Checkout repository
         uses: actions/checkout@v5
 
